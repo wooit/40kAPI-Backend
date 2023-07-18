@@ -1,0 +1,6 @@
+todo
+finish doc routes:
+/admin/users => last one, because i will need bearer token etc
+
+make a cache system for redundant call (ex: /books)
+make healthcheck route for testing if api is working as intended

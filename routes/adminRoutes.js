@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
 const userController = require("../controllers/user/getAllUserController");
-
+const { requireAuthAndIsAdmin } = require("../middlewares/isAdminMiddleware");
 
 /**
  * @swagger
@@ -26,6 +25,6 @@ const userController = require("../controllers/user/getAllUserController");
  *      '503':
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/users', userController.getListUsers);
+router.get('/users', requireAuthAndIsAdmin, userController.getListUsers);
 
 module.exports = router;
