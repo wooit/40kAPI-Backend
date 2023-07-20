@@ -1,6 +1,10 @@
 todo
-finish doc routes:
-/admin/users => last one, because i will need bearer token etc
+
+I will need authorization and bearer token ... for all admin routes
+
+
+todo later
 
 make a cache system for redundant call (ex: /books)
 make healthcheck route for testing if api is working as intended
+all 500 error should say about testing healthcheck route for checking if server is up and running

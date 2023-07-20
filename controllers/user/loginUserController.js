@@ -61,13 +61,6 @@ exports.postLoginUser = async (req, res, next) => {
                         userName: userName
                     })
                 }
-
-                // return Response.sendResponse({
-                //     res,
-                //     data: token,
-                //     message: 'Login Successful ',
-                //     statusCode: 200,
-                // })
             }
         })
     }

@@ -56,7 +56,7 @@ exports.postNewUser = async (req, res, next) => {
                 return Response.sendErrorResponse({
                     res,
                     message: "Something went wrong",
-                    statusCode: 400,
+                    statusCode: 500,
                 })
             }
     })

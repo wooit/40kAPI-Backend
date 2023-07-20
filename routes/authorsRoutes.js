@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const authorsController = require("../controllers/author/getAllAuthorsController");
-const authorsListNames = require("../controllers/author/getAllAuhorsName");
+const authorsListNames = require("../controllers/author/getAllAuhorsNameController");
 
 
 /**
@@ -59,6 +59,7 @@ router.get('/authors', authorsController.getAllAuthors);
  * /name-authors:
  *  get:
  *    description: Get the list of names in an array of all the authors registered
+ *    summary:  Get the list of names in an array of all the authors registered
  *    tags:
  *    - Authors
  *    responses:
