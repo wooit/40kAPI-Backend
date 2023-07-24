@@ -511,10 +511,10 @@ router.get('/title-books', getTitleBooks.getAllTitles);
  *               example: 1
  * /book/id/{id}:
  *  patch:
- *    description: Get the list of titles in an array of all the books registered
+ *    description: Update information related to book selected by its ID
  *    tags:
  *    - Books
- *    summary: Get the list of titles in an array of all the books registered
+ *    summary: Update selected book by its ID
  *    parameters:
  *    - name: id
  *      in: path

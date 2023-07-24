@@ -42,7 +42,7 @@ app.use(cookieParser());
 app.use(cors({
     credentials: true,
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'DELETE', 'PATCH'],
 }));
 
 // parse application/x-www-form-urlencoded

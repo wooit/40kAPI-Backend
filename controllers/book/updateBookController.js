@@ -5,7 +5,6 @@ exports.updateBook = async (req, res, next) => {
     const id = req.params.id;
 
     const bookToUpdate = await Books.fetchABookById(id)
-
     if(Object.keys(bookToUpdate[0]).length === 0){
         return Response.sendErrorResponse({
             res,
@@ -15,7 +14,6 @@ exports.updateBook = async (req, res, next) => {
     }
 
     const newBook = {...bookToUpdate[0][0], ...req.body}
-
     Books.updateBook(
         newBook.title,
         newBook.author,
@@ -26,7 +24,8 @@ exports.updateBook = async (req, res, next) => {
         newBook.release_order,
         newBook.period,
         newBook.multiple_stories,
-        newBook.serie_id, id
+        newBook.serie_id,
+        id
     )
         .then(result =>{
             res.send({
