@@ -40,6 +40,7 @@ module.exports = class Book {
 
         )
     }
+
     static updateBook(title, author, summary, releaseDate, releaseOrder, imgUrl, readingOrder, period, multipleStories, serieId,id){
         return db.execute('UPDATE book SET title=?, author=?, summary=?, release_date=?, release_order=?, img_url=?, reading_order=?, period=?, multiple_stories=?, serie_id=?  WHERE id=?', [title, author, summary, releaseDate, releaseOrder, imgUrl, readingOrder, period, multipleStories, serieId, id]);
 

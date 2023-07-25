@@ -3,8 +3,8 @@ const router = express.Router();
 
 const getBooksController = require("../controllers/book/getAllBooksController");
 const deleteBooksController = require("../controllers/book/deleteBookController");
-const getBookById = require("../controllers/book/getBookById");
-const getBookByTitle = require("../controllers/book/getBookByTitle");
+const getBookById = require("../controllers/book/getBookByIdController");
+const getBookByTitle = require("../controllers/book/getBookByTitleController");
 const postBook = require("../controllers/book/createBookController");
 const getTitleBooks = require("../controllers/book/getAllTitlesController");
 const updateBook = require("../controllers/book/updateBookController");
@@ -526,7 +526,7 @@ router.get('/title-books', getTitleBooks.getAllTitles);
  *      content:
  *        application/json:
  *          schema:
- *             $ref: '#/components/schema/CreateBook'
+ *             $ref: '#/components/schema/UpdateBook'
  *    responses:
  *      200:
  *         description: Success

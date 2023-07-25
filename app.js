@@ -12,6 +12,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const booksRoutes = require('./routes/booksRoutes');
 const authorsRoutes = require('./routes/authorsRoutes');
 const authRoutes = require('./routes/authRoutes');
+const seriesRoutes = require('./routes/seriesRoutes');
 
 require('dotenv').config({ path: `.env.local`, override: true });
 
@@ -56,6 +57,7 @@ app.use(express.json())
 app.use('/admin', adminRoutes);
 app.use( booksRoutes);
 app.use( authorsRoutes);
+app.use( seriesRoutes);
 app.use( '/auth', authRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
