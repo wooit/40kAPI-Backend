@@ -178,7 +178,7 @@ router.post('/author', postAuthor.createAuthor);
  *           type: string
  *         img_url:
  *           type: string
- *     Response404:
+ *     Response404Authors:
  *       type: object
  *       properties:
  *         status:
@@ -212,7 +212,7 @@ router.post('/author', postAuthor.createAuthor);
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404'
+ *                      $ref: '#/components/schema/Response404Authors'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:

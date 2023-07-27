@@ -228,7 +228,7 @@ router.get('/book/title/:title', getBookByTitle.getBookByTitle);
  *           type: integer
  *         title:
  *           type: string
- *     Response404:
+ *     Response404Book:
  *       type: object
  *       properties:
  *         status:
@@ -262,7 +262,7 @@ router.get('/book/title/:title', getBookByTitle.getBookByTitle);
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404'
+ *                      $ref: '#/components/schema/Response404Book'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:

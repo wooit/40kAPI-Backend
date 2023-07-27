@@ -178,7 +178,7 @@ router.post('/serie', createSerie.createBook);
  *           type: string
  *         summary:
  *           type: string
- *     Response404:
+ *     Response404Serie:
  *       type: object
  *       properties:
  *         status:
@@ -212,7 +212,7 @@ router.post('/serie', createSerie.createBook);
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404'
+ *                      $ref: '#/components/schema/Response404Serie'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:
