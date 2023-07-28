@@ -76,7 +76,7 @@ router.get('/main-characters', getAllMainCharacters.getAllMainCharacters);
  *           type: boolean
  *         is_leader:
  *           type: boolean
- *     Response404:
+ *     Response404MainCharacter:
  *       type: object
  *       properties:
  *         status:
@@ -98,7 +98,7 @@ router.get('/main-characters', getAllMainCharacters.getAllMainCharacters);
  *      required: true
  *    responses:
  *      200:
- *          description: The following book was successfully fetched
+ *          description: The following main character was successfully fetched
  *          content:
  *              application/json:
  *                  schema:
@@ -110,7 +110,7 @@ router.get('/main-characters', getAllMainCharacters.getAllMainCharacters);
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404'
+ *                      $ref: '#/components/schema/Response404MainCharacter'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:

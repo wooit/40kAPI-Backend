@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-const getAllSeries = require("../controllers/serie/getAllSeriesController");
-const getSerieById = require("../controllers/serie/getSerieByIdController");
-const createSerie = require('../controllers/serie/createSerieController');
-const deleteSerie = require('../controllers/serie/deleteSerieByIdController');
-const getAllSeriesName = require('../controllers/serie/getAllSeriesNameController');
-const updateSerie = require('../controllers/serie/updateSerieController');
+const getAllFactions = require("../controllers/faction/getAllFactionsController");
+const getAllFactionsName = require("../controllers/faction/getAllFactionsNameController");
+const createFaction = require("../controllers/faction/createFactionContoller");
+const getFactionById = require("../controllers/faction/getFactionByIdController");
+const deleteFaction = require("../controllers/faction/deleteFactionByIdController");
+const updateFaction = require("../controllers/faction/updateFactionController");
 
 /**
  * @openapi
  * components:
  *   schema:
- *     FetchAllSeriesResponse:
+ *     FetchAllFactionsResponse:
  *       type: array
  *       items:
  *         type: object
@@ -21,21 +21,23 @@ const updateSerie = require('../controllers/serie/updateSerieController');
  *             type: integer
  *           name:
  *             type: string
- *           summary:
+ *           lore:
  *             type: string
- * /series:
+ *           img_url:
+ *             type: string
+ * /factions:
  *  get:
- *    description: Get the list of all the series registered
- *    summary: Get the list of all the series registered
+ *    description: Get the list of all the factions registered
+ *    summary: Get the list of all the factions registered
  *    tags:
- *    - Series
+ *    - Factions
  *    responses:
  *      200:
  *         description: Success
  *         content:
  *             application/json:
  *                 schema:
- *                     $ref: '#/components/schema/FetchAllSeriesResponse'
+ *                     $ref: '#/components/schema/FetchAllFactionsResponse'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -45,115 +47,100 @@ const updateSerie = require('../controllers/serie/updateSerieController');
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/series', getAllSeries.getAllSeries);
+router.get('/factions', getAllFactions.getAllFactions)
 
 /**
  * @openapi
  * components:
  *   schema:
- *     GetSerie:
- *       type: object
- *       properties:
- *         id:
- *           type: integer
- *         name:
- *           type: string
- *         summary:
- *           type: string
- *     Response404:
- *       type: object
- *       properties:
- *         status:
- *           type: boolean
- *           example: false
- *         message:
- *           type: string
- *           example: This serie doesnt exist
- * /serie/id/{id}:
+ *     FetchAllFactionsNameResponse:
+ *       type: array
+ *       items:
+ *         type: string
+ *       example: ["faction1", "faction2", "faction3"]
+ * /name-factions:
  *  get:
- *    description: Get a serie selected by its ID
- *    summary: Get a serie by its ID
+ *    description: Get the list of names in an array of all the factions registered
+ *    summary:  Get the list of names in an array of all the factions registered
  *    tags:
- *    - Series
- *    parameters:
- *    - name: id
- *      in: path
- *      description: the id of the serie
- *      required: true
+ *    - Factions
  *    responses:
  *      200:
- *          description: The following serie was successfully fetched
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schema/GetSerie'
+ *         description: Success
+ *         content:
+ *             application/json:
+ *                 schema:
+ *                     $ref: '#/components/schema/FetchAllFactionsNameResponse'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
- *          description: Not Found – the requested resource does not exist
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schema/Response404'
+ *        description: Not Found – the requested resource does not exist
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/serie/id/:id', getSerieById.getSerieById);
+router.get('/name-factions', getAllFactionsName.getAllFactionsName);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     CreateSerie:
+ *     CreateNewFaction:
  *       type: object
  *       required:
  *        - name
- *        - summary
+ *        - lore
+ *        - imgUrl
  *       properties:
  *         name:
  *           type: string
- *           example: new serie
- *         summary:
+ *           example: new faction
+ *         lore:
  *           type: string
- *           example: new serie summary
- *     CreateSerieResponse:
+ *           example: This is the story of ...
+ *         imgUrl:
+ *           type: string
+ *           example: https://picsum.photos/200/300
+ *     CreateNewFactionResponse:
  *       type: object
  *       properties:
  *         status:
  *           type: boolean
  *         message:
  *           type: string
- *           example: New serie successfully added
- *         createdBook:
+ *           example: New faction successfully added
+ *         createdFaction:
  *           type: object
  *           properties:
  *             name:
  *               type: string
- *               example: new serie added
- *             summary:
+ *               example: new faction added
+ *             lore:
  *               type: string
- *               example: new serie summary
- * /serie:
+ *               example: faction lore
+ *             imgUrl:
+ *               type: string
+ *               example: https://picsum.photos/200/300
+ * /faction:
  *  post:
  *    tags:
- *    - Series
- *    description: Create a new serie
- *    summary: Create a serie
+ *    - Factions
+ *    description: Create a new faction
+ *    summary: Create a faction
  *    requestBody:
  *      required: true
  *      content:
  *        application/json:
  *          schema:
- *             $ref: '#/components/schema/CreateSerie'
+ *             $ref: '#/components/schema/CreateNewFaction'
  *    responses:
  *      200:
- *          description: A new serie has been created
+ *          description: A new faction has been created
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/CreateSerieResponse'
+ *                      $ref: '#/components/schema/CreateNewFactionResponse'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -163,22 +150,24 @@ router.get('/serie/id/:id', getSerieById.getSerieById);
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.post('/serie', createSerie.createBook);
+router.post('/faction', createFaction.createFaction);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     DeleteSerie:
+ *     GetFaction:
  *       type: object
  *       properties:
  *         id:
  *           type: integer
  *         name:
  *           type: string
- *         summary:
+ *         lore:
  *           type: string
- *     Response404Serie:
+ *         img_url:
+ *           type: string
+ *     Response404Faction:
  *       type: object
  *       properties:
  *         status:
@@ -186,25 +175,25 @@ router.post('/serie', createSerie.createBook);
  *           example: false
  *         message:
  *           type: string
- *           example: This Serie doesnt exist
- * /serie/id/{id}:
- *  delete:
- *    description: Delete a serie selected by its ID
- *    summary: Delete a serie by its ID
+ *           example: This faction doesnt exist
+ * /faction/id/{id}:
+ *  get:
+ *    description: Get a faction selected by its ID
+ *    summary: Get a faction by its ID
  *    tags:
- *    - Series
+ *    - Factions
  *    parameters:
  *    - name: id
  *      in: path
- *      description: the id of the serie
+ *      description: the id of the faction
  *      required: true
  *    responses:
  *      200:
- *          description: The following serie was successfully deleted
+ *          description: The following faction was successfully fetched
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/DeleteSerie'
+ *                      $ref: '#/components/schema/GetFaction'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -212,88 +201,119 @@ router.post('/serie', createSerie.createBook);
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404Serie'
+ *                      $ref: '#/components/schema/Response404Faction'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.delete('/serie/id/:id', deleteSerie.deleteSerie);
+router.get('/faction/id/:id', getFactionById.getFactionById);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     FetchAllSeriesNameResponse:
- *       type: array
- *       items:
- *         type: string
- *       example: ["serie1", "serie2", "serie3"]
- * /name-series:
- *  get:
- *    description: Get the list of names in an array of all the series registered
- *    summary:  Get the list of names in an array of all the series registered
+ *     DeleteFaction:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *         name:
+ *           type: string
+ *         lore:
+ *           type: string
+ *         img_url:
+ *           type: string
+ *     Response404Faction:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: boolean
+ *           example: false
+ *         message:
+ *           type: string
+ *           example: This faction doesnt exist
+ * /faction/id/{id}:
+ *  delete:
+ *    description: Delete a faction selected by its ID
+ *    summary: Delete a faction by its ID
  *    tags:
- *    - Series
+ *    - Factions
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: the id of the faction
+ *      required: true
  *    responses:
  *      200:
- *         description: Success
- *         content:
- *             application/json:
- *                 schema:
- *                     $ref: '#/components/schema/FetchAllSeriesNameResponse'
+ *          description: The following faction was successfully deleted
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schema/DeleteFaction'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
- *        description: Not Found – the requested resource does not exist
+ *          description: Not Found – the requested resource does not exist
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schema/Response404Faction'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/name-series', getAllSeriesName.getAllSeriesName);
+router.delete('/faction/id/:id', deleteFaction.deleteFactionById);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     UpdateSerie:
+ *     UpdateFaction:
  *       type: object
  *       required:
  *        - name
- *        - summary
+ *        - lore
+ *        - imgUrl
  *       properties:
  *         name:
  *           type: string
- *           example: modified serie name
- *         summary:
+ *           example: update faction name
+ *         lore:
  *           type: string
- *           example: modified summary
- *     UpdateSerieResponse:
+ *           example: the story starts with ...
+ *         imgUrl:
+ *           type: string
+ *           example: https://picsum.photos/200/300
+ *     UpdateFactionResponse:
  *       type: object
  *       properties:
  *         message:
  *           type: string
  *           example: Update Successful
- *         UpdateSerie:
+ *         updatedFaction:
  *           type: object
  *           properties:
  *             name:
  *               type: string
- *               example: new modified name
- *             summary:
+ *               example: faction name updated
+ *             lore:
  *               type: string
- *               example: new modified summary
- * /serie/id/{id}:
+ *               example: this all starts with ...
+ *             imgUrl:
+ *               type: string
+ *               example: https://picsum.photos/200/300
+ * /faction/id/{id}:
  *  patch:
- *    description: Update information related to the serie selected by its ID
+ *    description: Update information related to faction selected by its ID
  *    tags:
- *    - Series
- *    summary: Update selected serie by its ID
+ *    - Factions
+ *    summary: Update selected faction by its ID
  *    parameters:
  *    - name: id
  *      in: path
- *      description: Id of the serie you want to update
+ *      description: Id of the faction you want to update
  *      required: true
  *    requestBody:
  *      required: true
@@ -301,14 +321,14 @@ router.get('/name-series', getAllSeriesName.getAllSeriesName);
  *      content:
  *        application/json:
  *          schema:
- *             $ref: '#/components/schema/UpdateSerie'
+ *             $ref: '#/components/schema/UpdateFaction'
  *    responses:
  *      200:
  *         description: Success
  *         content:
  *             application/json:
  *                 schema:
- *                     $ref: '#/components/schema/UpdateSerieResponse'
+ *                     $ref: '#/components/schema/UpdateFactionResponse'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -318,6 +338,6 @@ router.get('/name-series', getAllSeriesName.getAllSeriesName);
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.patch('/serie/id/:id', updateSerie.updateSerie);
+router.patch('/faction/id/:id', updateFaction.updateFaction);
 
 module.exports = router;

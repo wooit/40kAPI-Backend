@@ -200,7 +200,7 @@ router.post('/author', postAuthor.createAuthor);
  *      required: true
  *    responses:
  *      200:
- *          description: The following book was successfully deleted
+ *          description: The following author was successfully deleted
  *          content:
  *              application/json:
  *                  schema:

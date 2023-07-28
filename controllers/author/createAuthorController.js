@@ -9,13 +9,11 @@ exports.createAuthor = async (req, res, next) => {
 
 
     const author = await Authors.fetchAuthorByName(name)
-    // check if a author already exist
     if(Object.keys(author[0]).length !== 0){
         res.send({
             message: "This author already exist",
         })
     } else {
-        // add the author
         Authors.createNewAuthor(name, country, biography, img_url)
             .then(result => {
                 const createdAuthor = req.body

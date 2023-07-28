@@ -14,6 +14,7 @@ const authorsRoutes = require('./routes/authorsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const seriesRoutes = require('./routes/seriesRoutes');
 const mainCharactersRoutes = require('./routes/mainCharactersRoutes');
+const factionsRoutes = require('./routes/factionsRoutes');
 
 require('dotenv').config({ path: `.env.local`, override: true });
 
@@ -60,6 +61,7 @@ app.use( booksRoutes);
 app.use( authorsRoutes);
 app.use( seriesRoutes);
 app.use( mainCharactersRoutes);
+app.use( factionsRoutes);
 app.use( '/auth', authRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
