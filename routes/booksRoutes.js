@@ -3,8 +3,8 @@ const router = express.Router();
 
 const getBooksController = require("../controllers/book/getAllBooksController");
 const deleteBooksController = require("../controllers/book/deleteBookController");
-const getBookById = require("../controllers/book/getBookById");
-const getBookByTitle = require("../controllers/book/getBookByTitle");
+const getBookById = require("../controllers/book/getBookByIdController");
+const getBookByTitle = require("../controllers/book/getBookByTitleController");
 const postBook = require("../controllers/book/createBookController");
 const getTitleBooks = require("../controllers/book/getAllTitlesController");
 const updateBook = require("../controllers/book/updateBookController");
@@ -85,7 +85,7 @@ router.get('/books', getBooksController.getAllBooks);
  *           type: integer
  *         title:
  *           type: string
- *     Response404:
+ *     BookResponse404:
  *       type: object
  *       properties:
  *         status:
@@ -119,7 +119,7 @@ router.get('/books', getBooksController.getAllBooks);
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404'
+ *                      $ref: '#/components/schema/BookResponse404'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:
@@ -228,7 +228,7 @@ router.get('/book/title/:title', getBookByTitle.getBookByTitle);
  *           type: integer
  *         title:
  *           type: string
- *     Response404:
+ *     Response404Book:
  *       type: object
  *       properties:
  *         status:
@@ -262,7 +262,7 @@ router.get('/book/title/:title', getBookByTitle.getBookByTitle);
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404'
+ *                      $ref: '#/components/schema/Response404Book'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:
@@ -526,7 +526,7 @@ router.get('/title-books', getTitleBooks.getAllTitles);
  *      content:
  *        application/json:
  *          schema:
- *             $ref: '#/components/schema/CreateBook'
+ *             $ref: '#/components/schema/UpdateBook'
  *    responses:
  *      200:
  *         description: Success

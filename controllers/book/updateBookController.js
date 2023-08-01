@@ -14,6 +14,7 @@ exports.updateBook = async (req, res, next) => {
     }
 
     const newBook = {...bookToUpdate[0][0], ...req.body}
+
     Books.updateBook(
         newBook.title,
         newBook.author,

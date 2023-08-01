@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-const authorsController = require("../controllers/author/getAllAuthorsController");
-const authorsListNames = require("../controllers/author/getAllAuhorsNameController");
-const postAuthor = require("../controllers/author/createAuthorController");
-const deleteAuthor = require("../controllers/author/deleteAuthorByIdController");
-const updateAuthor = require("../controllers/author/updateAuthorController");
-
+const getAllFactions = require("../controllers/faction/getAllFactionsController");
+const getAllFactionsName = require("../controllers/faction/getAllFactionsNameController");
+const createFaction = require("../controllers/faction/createFactionContoller");
+const getFactionById = require("../controllers/faction/getFactionByIdController");
+const deleteFaction = require("../controllers/faction/deleteFactionByIdController");
+const updateFaction = require("../controllers/faction/updateFactionController");
 
 /**
  * @openapi
  * components:
  *   schema:
- *     FetchAllAuthorsResponse:
+ *     FetchAllFactionsResponse:
  *       type: array
  *       items:
  *         type: object
@@ -21,24 +21,23 @@ const updateAuthor = require("../controllers/author/updateAuthorController");
  *             type: integer
  *           name:
  *             type: string
- *           country:
- *             type: string
- *           biography:
+ *           lore:
  *             type: string
  *           img_url:
  *             type: string
- * /authors:
+ * /factions:
  *  get:
- *    description: Get the list of all the authors registered
+ *    description: Get the list of all the factions registered
+ *    summary: Get the list of all the factions registered
  *    tags:
- *    - Authors
+ *    - Factions
  *    responses:
  *      200:
  *         description: Success
  *         content:
  *             application/json:
  *                 schema:
- *                     $ref: '#/components/schema/FetchAllAuthorsResponse'
+ *                     $ref: '#/components/schema/FetchAllFactionsResponse'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -48,30 +47,30 @@ const updateAuthor = require("../controllers/author/updateAuthorController");
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/authors', authorsController.getAllAuthors);
+router.get('/factions', getAllFactions.getAllFactions)
 
 /**
  * @openapi
  * components:
  *   schema:
- *     FetchAllAuthorsNameResponse:
+ *     FetchAllFactionsNameResponse:
  *       type: array
  *       items:
  *         type: string
- *       example: ["bill", "bob", "geo"]
- * /name-authors:
+ *       example: ["faction1", "faction2", "faction3"]
+ * /name-factions:
  *  get:
- *    description: Get the list of names in an array of all the authors registered
- *    summary:  Get the list of names in an array of all the authors registered
+ *    description: Get the list of names in an array of all the factions registered
+ *    summary:  Get the list of names in an array of all the factions registered
  *    tags:
- *    - Authors
+ *    - Factions
  *    responses:
  *      200:
  *         description: Success
  *         content:
  *             application/json:
  *                 schema:
- *                     $ref: '#/components/schema/FetchAllAuthorsNameResponse'
+ *                     $ref: '#/components/schema/FetchAllFactionsNameResponse'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -81,75 +80,67 @@ router.get('/authors', authorsController.getAllAuthors);
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/name-authors', authorsListNames.getAllAuthorsName);
-
+router.get('/name-factions', getAllFactionsName.getAllFactionsName);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     CreateAuthor:
+ *     CreateNewFaction:
  *       type: object
  *       required:
  *        - name
- *        - country
- *        - biography
- *        - img_url
+ *        - lore
+ *        - imgUrl
  *       properties:
  *         name:
  *           type: string
- *           example: new author
- *         country:
+ *           example: new faction
+ *         lore:
  *           type: string
- *           example: England
- *         biography:
+ *           example: This is the story of ...
+ *         imgUrl:
  *           type: string
- *           example: new author biography
- *         img_url:
- *           type: string
- *           example: url_image
- *     CreateAuthorResponse:
+ *           example: https://picsum.photos/200/300
+ *     CreateNewFactionResponse:
  *       type: object
  *       properties:
  *         status:
  *           type: boolean
  *         message:
  *           type: string
- *           example: New author successfully added
- *         createdAuthor:
+ *           example: New faction successfully added
+ *         createdFaction:
  *           type: object
  *           properties:
  *             name:
  *               type: string
- *               example: new author added
- *             country:
+ *               example: new faction added
+ *             lore:
  *               type: string
- *               example: england
- *             biography:
- *               type: string
- *               example: new author biography
- *             img_url:
+ *               example: faction lore
+ *             imgUrl:
  *               type: string
  *               example: https://picsum.photos/200/300
- * /author:
+ * /faction:
  *  post:
  *    tags:
- *    - Authors
- *    description: Create a new author
- *    summary: Create an author
+ *    - Factions
+ *    description: Create a new faction
+ *    summary: Create a faction
  *    requestBody:
  *      required: true
  *      content:
  *        application/json:
  *          schema:
- *             $ref: '#/components/schema/CreateAuthor'
+ *             $ref: '#/components/schema/CreateNewFaction'
  *    responses:
  *      200:
- *          description: A new author has been created
+ *          description: A new faction has been created
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/CreateAuthorResponse'
+ *                      $ref: '#/components/schema/CreateNewFactionResponse'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -159,26 +150,24 @@ router.get('/name-authors', authorsListNames.getAllAuthorsName);
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.post('/author', postAuthor.createAuthor);
+router.post('/faction', createFaction.createFaction);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     DeleteAuthor:
+ *     GetFaction:
  *       type: object
  *       properties:
  *         id:
  *           type: integer
  *         name:
  *           type: string
- *         country:
- *           type: string
- *         biography:
+ *         lore:
  *           type: string
  *         img_url:
  *           type: string
- *     Response404Authors:
+ *     Response404Faction:
  *       type: object
  *       properties:
  *         status:
@@ -186,25 +175,25 @@ router.post('/author', postAuthor.createAuthor);
  *           example: false
  *         message:
  *           type: string
- *           example: This Author doesnt exist
- * /author/id/{id}:
- *  delete:
- *    description: Delete an author selected by its ID
- *    summary: Delete an author by its ID
+ *           example: This faction doesnt exist
+ * /faction/id/{id}:
+ *  get:
+ *    description: Get a faction selected by its ID
+ *    summary: Get a faction by its ID
  *    tags:
- *    - Authors
+ *    - Factions
  *    parameters:
  *    - name: id
  *      in: path
- *      description: the id of the author
+ *      description: the id of the faction
  *      required: true
  *    responses:
  *      200:
- *          description: The following author was successfully deleted
+ *          description: The following faction was successfully fetched
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/DeleteAuthor'
+ *                      $ref: '#/components/schema/GetFaction'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -212,69 +201,119 @@ router.post('/author', postAuthor.createAuthor);
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404Authors'
+ *                      $ref: '#/components/schema/Response404Faction'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.delete('/author/id/:id', deleteAuthor.deleteAuthor);
+router.get('/faction/id/:id', getFactionById.getFactionById);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     UpdateAuthor:
+ *     DeleteFaction:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *         name:
+ *           type: string
+ *         lore:
+ *           type: string
+ *         img_url:
+ *           type: string
+ *     Response404Faction:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: boolean
+ *           example: false
+ *         message:
+ *           type: string
+ *           example: This faction doesnt exist
+ * /faction/id/{id}:
+ *  delete:
+ *    description: Delete a faction selected by its ID
+ *    summary: Delete a faction by its ID
+ *    tags:
+ *    - Factions
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: the id of the faction
+ *      required: true
+ *    responses:
+ *      200:
+ *          description: The following faction was successfully deleted
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schema/DeleteFaction'
+ *      400:
+ *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
+ *      404:
+ *          description: Not Found – the requested resource does not exist
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schema/Response404Faction'
+ *      500:
+ *        description: Internal Server Error – a generic error occurred on the server
+ *      503:
+ *        description: Service Unavailable – the requested service is not available
+ */
+router.delete('/faction/id/:id', deleteFaction.deleteFactionById);
+
+/**
+ * @openapi
+ * components:
+ *   schema:
+ *     UpdateFaction:
  *       type: object
  *       required:
  *        - name
- *        - country
- *        - biography
- *        - img_url
+ *        - lore
+ *        - imgUrl
  *       properties:
  *         name:
  *           type: string
- *           example: new author
- *         country:
+ *           example: update faction name
+ *         lore:
  *           type: string
- *           example: Belgium
- *         biography:
+ *           example: the story starts with ...
+ *         imgUrl:
  *           type: string
- *           example: new author biography
- *         img_url:
- *           type: string
- *           example: url_image
- *     UpdateAuthorResponse:
+ *           example: https://picsum.photos/200/300
+ *     UpdateFactionResponse:
  *       type: object
  *       properties:
  *         message:
  *           type: string
  *           example: Update Successful
- *         updatedAuthor:
+ *         updatedFaction:
  *           type: object
  *           properties:
  *             name:
  *               type: string
- *               example: new author name
- *             country:
+ *               example: faction name updated
+ *             lore:
  *               type: string
- *               example: Belgium
- *             biography:
- *               type: string
- *               example: new author biography
- *             img_url:
+ *               example: this all starts with ...
+ *             imgUrl:
  *               type: string
  *               example: https://picsum.photos/200/300
- * /author/id/{id}:
+ * /faction/id/{id}:
  *  patch:
- *    description: Update information related to author selected by its ID
+ *    description: Update information related to faction selected by its ID
  *    tags:
- *    - Authors
- *    summary: Update selected author by its ID
+ *    - Factions
+ *    summary: Update selected faction by its ID
  *    parameters:
  *    - name: id
  *      in: path
- *      description: Id of the author you want to update
+ *      description: Id of the faction you want to update
  *      required: true
  *    requestBody:
  *      required: true
@@ -282,14 +321,14 @@ router.delete('/author/id/:id', deleteAuthor.deleteAuthor);
  *      content:
  *        application/json:
  *          schema:
- *             $ref: '#/components/schema/UpdateAuthor'
+ *             $ref: '#/components/schema/UpdateFaction'
  *    responses:
  *      200:
  *         description: Success
  *         content:
  *             application/json:
  *                 schema:
- *                     $ref: '#/components/schema/UpdateAuthorResponse'
+ *                     $ref: '#/components/schema/UpdateFactionResponse'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -299,6 +338,6 @@ router.delete('/author/id/:id', deleteAuthor.deleteAuthor);
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.patch('/author/id/:id', updateAuthor.updateAuthor);
+router.patch('/faction/id/:id', updateFaction.updateFaction);
 
 module.exports = router;
