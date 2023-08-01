@@ -1,47 +1,47 @@
 const express = require('express');
 const router = express.Router();
 
-const getAllFactionsBooksRelations = require("../controllers/factions_books/getAllFactionsBooksRelationsController");
-const createFactionBookRelation = require("../controllers/factions_books/createFactionBookController");
-const getAllFactionsFromBookID = require("../controllers/factions_books/getAllFactionsFromBookIdController");
-const getAllBooksFromFactionId = require("../controllers/factions_books/getAllBooksFromFactionIdController");
-const deleteFactionBookRelation = require("../controllers/factions_books/deleteFactionBookRelationController");
+const getAllMainCharactersBooksRelations = require("../controllers/main_characters_books/getAllMainCharactersBookRelationsController");
+const getAllMainCharacterFromBookID = require("../controllers/main_characters_books/getAllMainCharactersFromBookIdController");
+const getAllBooksFromMainCharacterId = require("../controllers/main_characters_books/getAllBooksFromMainCharacterIdController");
+const deleteMainCharacterBookRelation = require("../controllers/main_characters_books/deleteMainCharacterBookRelationController");
+const createMainCharacterBookRelation = require("../controllers/main_characters_books/createMainCharacterBookRelationController");
 
 /**
  * @openapi
  * components:
  *   schema:
- *     GetAllFactionsBooksRelations:
+ *     GetAllMainCharactersBooksRelations:
  *       type: object
  *       properties:
  *         id:
  *           type: integer
  *           example: 1
- *         factionId:
+ *         mainCharacterId:
  *           type: integer
  *           example: 1
- *         factionName:
+ *         mainCharacterName:
  *           type: string
- *           example: The bad guys
+ *           example: bob
  *         bookId:
  *           type: integer
  *           example: 42
  *         bookTitle:
  *           type: string
- *           example: Origin of the bad guys
- * /factions-books:
+ *           example: The mighty adventures of Bob
+ * /main-characters-books:
  *  get:
  *    tags:
- *    - Factions_Books
- *    description: Get all relations between factions and books
- *    summary: Get all relations between factions and books
+ *    - MainCharacters_Books
+ *    description: Get all relations between main characters and books
+ *    summary: Get all relations between main characters and books
  *    responses:
  *      200:
  *          description: The following relations were successfully fetched
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/GetAllFactionsBooksRelations'
+ *                      $ref: '#/components/schema/GetAllMainCharactersBooksRelations'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -51,13 +51,13 @@ const deleteFactionBookRelation = require("../controllers/factions_books/deleteF
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/factions-books', getAllFactionsBooksRelations.getAllFactionsBooksRelations);
+router.get('/main-characters-books', getAllMainCharactersBooksRelations.getAllMainCharactersBooksRelations);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     GetListFactionsFromBookId:
+ *     GetListMainCharactersFromBookId:
  *       type: object
  *       properties:
  *         id:
@@ -68,16 +68,22 @@ router.get('/factions-books', getAllFactionsBooksRelations.getAllFactionsBooksRe
  *           type: string
  *         img_url:
  *           type: string
- *         faction:
+ *         is_primarch:
+ *           type: integer
+ *         is_important:
+ *           type: integer
+ *         is_leader:
+ *           type: integer
+ *         main_character:
  *           type: integer
  *         book:
  *           type: integer
- * /factions-books/book/{bookId}:
+ * /main-characters-books/book/{bookId}:
  *  get:
  *    tags:
- *    - Factions_Books
- *    description: Get list of factions from selected bookId
- *    summary: Get list of factions from selected bookId
+ *    - MainCharacters_Books
+ *    description: Get list of main characters from selected bookId
+ *    summary: Get list of main characters from selected bookId
  *    parameters:
  *    - name: bookId
  *      in: path
@@ -85,11 +91,11 @@ router.get('/factions-books', getAllFactionsBooksRelations.getAllFactionsBooksRe
  *      required: true
  *    responses:
  *      200:
- *          description: The following factions were successfully fetched
+ *          description: The following main characters were successfully fetched
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/GetListFactionsFromBookId'
+ *                      $ref: '#/components/schema/GetListMainCharactersFromBookId'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -99,13 +105,13 @@ router.get('/factions-books', getAllFactionsBooksRelations.getAllFactionsBooksRe
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/factions-books/book/:bookId', getAllFactionsFromBookID.getAllFactionsFromBookID);
+router.get('/main-characters-books/book/:bookId', getAllMainCharacterFromBookID.getAllMainCharacterFromBookID);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     GetListBooksFromFactionId:
+ *     GetListMainCharactersFromBookId:
  *       type: object
  *       properties:
  *         id:
@@ -126,20 +132,20 @@ router.get('/factions-books/book/:bookId', getAllFactionsFromBookID.getAllFactio
  *           type: string
  *         serieName:
  *           type: string
- *         faction:
+ *         main_character:
  *           type: integer
  *         book:
  *          type: integer
- * /factions-books/faction/{factionId}:
+ * /main-characters-books/main-character/{mainCharacterId}:
  *  get:
  *    tags:
- *    - Factions_Books
- *    description: Get list of books from selected factionId
- *    summary: Get list of books from selected factionId
+ *    - MainCharacters_Books
+ *    description: Get list of books from selected mainCharacterId
+ *    summary: Get list of books from selected mainCharacterId
  *    parameters:
- *    - name: factionId
+ *    - name: mainCharacterId
  *      in: path
- *      description: the id of the faction
+ *      description: the id of the mainCharacter
  *      required: true
  *    responses:
  *      200:
@@ -147,7 +153,7 @@ router.get('/factions-books/book/:bookId', getAllFactionsFromBookID.getAllFactio
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/GetListBooksFromFactionId'
+ *                      $ref: '#/components/schema/GetListMainCharactersFromBookId'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -157,80 +163,19 @@ router.get('/factions-books/book/:bookId', getAllFactionsFromBookID.getAllFactio
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.get('/factions-books/faction/:factionId', getAllBooksFromFactionId.getAllBooksFromFactionId);
+router.get('/main-characters-books/main-character/:mainCharacterId', getAllBooksFromMainCharacterId.getAllBooksFromMainCharacterId);
 
 /**
  * @openapi
  * components:
  *   schema:
- *     CreateFactionBookRelation:
- *       type: object
- *       required:
- *        - factionId
- *        - bookId
- *       properties:
- *         factionId:
- *           type: integer
- *         bookId:
- *           type: integer
- *     CreateFactionBookResponse:
- *       type: object
- *       properties:
- *         status:
- *           type: boolean
- *         message:
- *           type: string
- *           example: New faction book relation successfully created
- *         relation:
- *           type: object
- *           properties:
- *             factionId:
- *               type: integer
- *               example: 24
- *             bookId:
- *               type: integer
- *               example: 42
- * /factions-books:
- *  post:
- *    tags:
- *    - Factions_Books
- *    description: Create a relation between faction and book
- *    summary: Create a relation between faction and book
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *             $ref: '#/components/schema/CreateFactionBookRelation'
- *    responses:
- *      200:
- *          description: The following relation was successfully created
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schema/CreateFactionBookResponse'
- *      400:
- *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
- *      404:
- *          description: Not Found – the requested resource does not exist
- *      500:
- *        description: Internal Server Error – a generic error occurred on the server
- *      503:
- *        description: Service Unavailable – the requested service is not available
- */
-router.post('/factions-books', createFactionBookRelation.createFactionBookRelation);
-
-/**
- * @openapi
- * components:
- *   schema:
- *     DeleteFactionBookRelation:
+ *     DeleteMainCharacterBookRelation:
  *       type: object
  *       properties:
  *         message:
  *           type: string
- *           example: The faction book relation 42 has been deleted
- *     Response404DeleteFactionBookRelation:
+ *           example: The main character book relation 42 has been deleted
+ *     Response404DeleteMainCharacterBookRelation:
  *       type: object
  *       properties:
  *         status:
@@ -238,17 +183,17 @@ router.post('/factions-books', createFactionBookRelation.createFactionBookRelati
  *           example: false
  *         message:
  *           type: string
- *           example: This faction book id doesnt exist
- * /factions-books/id/{id}:
+ *           example: This main character book id doesnt exist
+ * /main-characters-books/id/{id}:
  *  delete:
- *    description: Delete a faction book relation selected by its ID
- *    summary: Delete a faction book relation selected by its ID
+ *    description: Delete a main character book relation selected by its ID
+ *    summary: Delete a main character book relation selected by its ID
  *    tags:
- *    - Factions_Books
+ *    - MainCharacters_Books
  *    parameters:
  *    - name: id
  *      in: path
- *      description: the id of the faction book relation
+ *      description: the id of the main character book relation
  *      required: true
  *    responses:
  *      200:
@@ -256,7 +201,7 @@ router.post('/factions-books', createFactionBookRelation.createFactionBookRelati
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/DeleteFactionBookRelation'
+ *                      $ref: '#/components/schema/DeleteMainCharacterBookRelation'
  *      400:
  *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
  *      404:
@@ -264,12 +209,73 @@ router.post('/factions-books', createFactionBookRelation.createFactionBookRelati
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schema/Response404DeleteFactionBookRelation'
+ *                      $ref: '#/components/schema/Response404DeleteMainCharacterBookRelation'
  *      500:
  *        description: Internal Server Error – a generic error occurred on the server
  *      503:
  *        description: Service Unavailable – the requested service is not available
  */
-router.delete('/factions-books/id/:id', deleteFactionBookRelation.deleteFactionBookRelation);
+router.delete('/main-characters-books/id/:id', deleteMainCharacterBookRelation.deleteMainCharacterBookRelation);
+
+/**
+ * @openapi
+ * components:
+ *   schema:
+ *     CreateMainCharacterBookRelation:
+ *       type: object
+ *       required:
+ *        - mainCharacterId
+ *        - bookId
+ *       properties:
+ *         mainCharacterId:
+ *           type: integer
+ *         bookId:
+ *           type: integer
+ *     CreateMainCharacterBookResponse:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: boolean
+ *         message:
+ *           type: string
+ *           example: New main character book relation successfully created
+ *         relation:
+ *           type: object
+ *           properties:
+ *             mainCharacterId:
+ *               type: integer
+ *               example: 24
+ *             bookId:
+ *               type: integer
+ *               example: 42
+ * /main-characters-books:
+ *  post:
+ *    tags:
+ *    - MainCharacters_Books
+ *    description: Create a relation between main character and book
+ *    summary: Create a relation between main character and book
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *             $ref: '#/components/schema/CreateMainCharacterBookRelation'
+ *    responses:
+ *      200:
+ *          description:  The following relation was successfully created
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schema/CreateMainCharacterBookResponse'
+ *      400:
+ *       description: Bad Request – client sent an invalid request, such as lacking required request body or parameter
+ *      404:
+ *          description: Not Found – the requested resource does not exist
+ *      500:
+ *        description: Internal Server Error – a generic error occurred on the server
+ *      503:
+ *        description: Service Unavailable – the requested service is not available
+ */
+router.post('/main-characters-books', createMainCharacterBookRelation.createMainCharacterBookRelation);
 
 module.exports = router;

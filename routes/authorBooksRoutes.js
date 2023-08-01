@@ -6,8 +6,6 @@ const getAllAuthorsBooksRelations = require("../controllers/authors_books/getAll
 const deleteAuthorBookRelation = require("../controllers/authors_books/deleteAuthorBookRelationController");
 const getAllAuthorsFromBookID = require("../controllers/authors_books/getAllAuthorsFromSelectedBookController");
 
-// WARNING i will need a route for getting all authors from one book when i will be getting to this special case
-
 /**
  * @openapi
  * components:
@@ -207,7 +205,7 @@ router.get('/authors-books/book/:bookId', getAllAuthorsFromBookID.getAllAuthorsF
  *             $ref: '#/components/schema/CreateAuthorBookRelation'
  *    responses:
  *      200:
- *          description: The following book was successfully fetched
+ *          description: The following relation was successfully created
  *          content:
  *              application/json:
  *                  schema:
